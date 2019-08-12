@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import { sessionLogin, isAuthenticated } from '../../Services/auth'
+import logo from '../../assets/logo.svg'
 
 export default class Login extends Component {
   state = {
@@ -10,11 +11,12 @@ export default class Login extends Component {
     invalidLogin: false
   }
 
-  componentDidMount () {
-    if(isAuthenticated()) this.props.history.push('/main')
+  componentWillMount() {
+    if (isAuthenticated()) this.props.history.push('/main')
   }
 
-  handleSignIn = async () => {
+  handleSignIn = async (e) => {
+    e.preventDefault();
     try {
       this.setState({ invalidLogin: false, errorMessage: '' })
       if (!this.state.email || !this.state.password) throw new Error('Please, enter your information bellow.')
@@ -34,7 +36,10 @@ export default class Login extends Component {
         <Container>
           <Row>
             <Col xs={{ size: 4, offset: 4 }} style={{ backgroundColor: '#ffffff', borderRadius: 12, padding: 25, marginTop: '20vh' }}>
-              <Form>
+              <div style={{ height: 150, textAlign: 'center' }}>
+                <img alt='Login' style={{ height: '100%' }} src={logo} />
+              </div>
+              <Form onSubmit={(e) => this.handleSignIn(e)}>
                 <FormGroup>
                   <Label for='exampleEmail'>Email</Label>
                   <Input
@@ -64,7 +69,7 @@ export default class Login extends Component {
                 <div style={{ paddingBottom: 10, textAlign: 'center' }}>
                   {this.state.errorMessage}
                 </div>
-                <Button onClick={this.handleSignIn} className='float-right'>Submit</Button>
+                <Button className='float-right'>Submit</Button>
               </Form>
             </Col>
           </Row>

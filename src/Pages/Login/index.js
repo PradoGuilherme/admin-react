@@ -16,7 +16,7 @@ export default class Login extends Component {
   }
 
   handleSignIn = async (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault()
     try {
       this.setState({ invalidLogin: false, errorMessage: '' })
       if (!this.state.email || !this.state.password) throw new Error('Please, enter your information bellow.')
@@ -69,7 +69,7 @@ export default class Login extends Component {
                 <div style={{ paddingBottom: 10, textAlign: 'center' }}>
                   {this.state.errorMessage}
                 </div>
-                <Button className='float-right'>Submit</Button>
+                <Button type='submit' className='float-right'>Submit</Button>
               </Form>
             </Col>
           </Row>

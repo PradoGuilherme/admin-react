@@ -24,7 +24,7 @@ describe('Login test page', () => {
 
   it('should submit form without enter data', () => {
     const login = shallow(<Login />)
-    login.find('Button').simulate('click')
+    login.find('Form').simulate('submit')
     expect(login.state('invalidLogin')).to.be.equal(true)
     expect(login.state('errorMessage')).to.be.equal('Please, enter your information bellow.')
   })
@@ -38,7 +38,7 @@ describe('Login test page', () => {
     login.setProps({ history: historyMock })
     login.find('#inputNameLogin').simulate('change', { target: { value: 'email' } })
     login.find('#inputPasswordLogin').simulate('change', { target: { value: 'password' } })
-    login.find('Button').simulate('click')
+    login.find('Form').simulate('submit')
 
     expect(login.state('invalidLogin')).to.be.equal(false)
   })
@@ -59,12 +59,12 @@ describe('Login test page', () => {
     login.setProps({ history: historyMock })
     login.find('#inputNameLogin').simulate('change', { target: { value: '' } })
     login.find('#inputPasswordLogin').simulate('change', { target: { value: '' } })
-    login.find('Button').simulate('click')
+    login.find('Form').simulate('submit')
     expect(login.state('invalidLogin')).to.be.equal(true)
     expect(login.state('errorMessage')).to.be.equal('Please, enter your information bellow.')
     login.find('#inputNameLogin').simulate('change', { target: { value: 'email' } })
     login.find('#inputPasswordLogin').simulate('change', { target: { value: 'password' } })
-    login.find('Button').simulate('click')
+    login.find('Form').simulate('submit')
 
     expect(login.state('invalidLogin')).to.be.equal(false)
   })

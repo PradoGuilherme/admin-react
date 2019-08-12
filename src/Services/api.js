@@ -6,4 +6,10 @@ const instance = axios.create({
   headers: { 'X-Custom-Header': 'foobar' }
 })
 
+instance.interceptors.request.use(async config => {
+  const userToken = localStorage.getItem('USER_TOKEN_KEY')
+  if (userToken) { config.headers['x-access-token'] = userToken }
+  return config
+})
+
 module.exports = instance

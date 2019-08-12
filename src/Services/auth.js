@@ -9,7 +9,9 @@ export const isAuthenticated = () => {
 export const sessionLogin = async (email, senha) => {
   const result = await api.post('/login', { email, senha })
   if (result && result.data && result.data.error) return result.data
-  localStorage.setItem(USER_TOKEN_KEY, result.apiUser)
+  if (result.data && result.data.data && result.data.data.token) {
+    localStorage.setItem(USER_TOKEN_KEY, result.data.data.token)
+  }
 }
 
 export const sessionLogout = () => {

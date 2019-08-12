@@ -6,11 +6,9 @@ const listCLients = async () => {
 }
 
 const createClient = async (client) => {
-  console.log('TCL: createClient -> client', client)
   const result = await api.post('/clients/create', {
     ...client
   })
-  console.log('TCL: createClient -> result', result)
   return result.data
 }
 
@@ -21,4 +19,16 @@ const removeClients = async (idsToDelete) => {
   return result.data
 }
 
-export default { listCLients, createClient, removeClients }
+const updateClient = async (client) => {
+  const result = await api.put('/clients/edit', {
+    ...client
+  })
+  return result.data
+}
+
+export default {
+  listCLients,
+  createClient,
+  removeClients,
+  updateClient
+}

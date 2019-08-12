@@ -3,11 +3,13 @@ import { Container, Row, Col, Button, Table } from 'reactstrap'
 import clientService from '../../Services/clients'
 import Dialoga from '../../Components/ClientDialog'
 import Header from '../../Components/Header'
+import { FaEdit } from "react-icons/fa"
 
 export default class Clients extends Component {
   state = {
     clients: [],
     clientsToDelete: [],
+    userToEdit: {},
     showModal: false
   }
 
@@ -16,7 +18,15 @@ export default class Clients extends Component {
     this.setState({ clients: clients.data })
   }
 
-  openModal = () => this.setState({ showModal: true })
+  openModal = () => this.setState({
+    showModal: true,
+    userToEdit: {}
+  })
+
+  editClient = (user) => this.setState({
+    showModal: true,
+    userToEdit: user
+  })
 
   toggle = async () => {
     this.setState({ showModal: !this.state.showModal })
@@ -40,7 +50,6 @@ export default class Clients extends Component {
     })
   }
 
-
   deleteClient = async () => {
     if (!this.state.clientsToDelete || !this.state.clientsToDelete.length)
       return alert('Você deve selecionar ao menos um cliente para realizar a remoção.')
@@ -58,6 +67,7 @@ export default class Clients extends Component {
 
         <Container>
           <Dialoga
+            userToEdit={this.state.userToEdit}
             handleClose={this.toggle}
             show={this.state.showModal}
           />
@@ -97,7 +107,20 @@ export default class Clients extends Component {
                         <td>{cli.name}</td>
                         <td>{cli.email}</td>
                         <td>{cli.userName}</td>
-                        <td></td>
+                        <td>
+                          <Button
+                            style={{
+                              padding: 10,
+                              paddingLeft: 12,
+                              paddingTop: 0,
+                              paddingBottom: 6
+                            }}
+                            onClick={() => this.editClient(cli)}
+                            className='float-right'
+                            color='success'>
+                            <FaEdit />
+                          </Button>
+                        </td>
                       </tr>
                     )}
                   </tbody>

@@ -43,10 +43,10 @@ export default class Clients extends Component {
 
   deleteClient = async () => {
     if (!this.state.clientsToDelete || !this.state.clientsToDelete.length)
-      return alert('Você deve selecionar ao menos um cliente para realizar a exclusão.')
+      return alert('Você deve selecionar ao menos um cliente para realizar a remoção.')
 
-    const clients = await clientService.listCLients()
-    this.setState({ idsToDelete: this.state.clientsToDelete, clients: clients.data })
+    const clients = await clientService.removeClients(this.state.clientsToDelete)
+    this.setState({ idsToDelete: [], clients: clients.data })
   }
 
   render() {
@@ -107,16 +107,19 @@ export default class Clients extends Component {
                 </div>
               }
               <div>
-                <Button
-                  style={{
-                    marginTop: 10,
-                    marginBottom: 25
-                  }}
-                  onClick={this.deleteClient}
-                  className='float-right'
-                  color='danger'>
-                  Delete Client
-              </Button>
+                {this.state.clients.length ?
+                  <Button
+                    style={{
+                      marginTop: 10,
+                      marginBottom: 25
+                    }}
+                    onClick={this.deleteClient}
+                    className='float-right'
+                    color='danger'>
+                    Delete Client
+                  </Button>
+                  : ''
+                }
               </div>
             </Col>
           </Row>
